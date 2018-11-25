@@ -1,3 +1,4 @@
+import sys
 import math
 
 # We are going to assume 8 hour days
@@ -120,10 +121,27 @@ def automate_time(f, f_unit, t, t_unit):
 # "f times per f_unit, I spend t t_unit doing task"
 # automate_time(1, 'year', 1, 'minute')
 
-def main(args):
-    cmd, f, _, f_unit, _, _, t, t_unit = args.split(' ')
+help_string = '''
+This library tells you how long you spend on a repeating task so that you can
+make a judgement call as to automate or not. Make sure to follow the correct pattern:
+
+    f times per f_unit I spend t t_unit doing task
+
+    f -> (int) frequency
+    f_unit -> (string) frequency unit [second|minute|hour|day|month|year]
+    t -> (int) time
+    t_unit -> (string) time unit [second|minute|hour|day|month|year]
+'''
+
+def main():
+    if sys.argv[1] == '-h':
+        print(help_string)
+
+    if len(sys.argv) != 9:
+        return
+
+    cmd, f, _, _, f_unit, _, _, t, t_unit = sys.argv
     automate_time(int(f), f_unit, int(t), t_unit)
 
-main('tta 1 per year i spend 1 minute')
-main('tta 5 per day i spend 3 seconds')
-main('tta 4 per month i spend 20 minutes')
+if __name__ == '__main__':
+   main()
